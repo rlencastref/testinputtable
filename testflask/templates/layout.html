@@ -16,7 +16,8 @@
     <link rel="stylesheet" href={{ url_for('static', filename='css/bootstrap.min.css') }}>
     <link rel="stylesheet" type="text/css" href={{ url_for('static', filename='main.css') }}
     <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
-
+    
+    {% block head %}{% endblock head%}
 </head>
 
 <body>
@@ -50,7 +51,7 @@
               {% endfor %}
             {% endif %}
           {% endwith %}
-          {% block content %}{% endblock %}
+          {% block content %}{% endblock content%}
         </div>
       </div>
     </main>

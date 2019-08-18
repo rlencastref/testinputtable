@@ -5,18 +5,25 @@
     <fieldset class="form-group">
         <form method="POST" action="">
             {{ form.hidden_tag() }}
+                <table>
+                <tr>
                 {% for l in form %}
                     {% if l.type != 'CSRFTokenField' and l.type!='SubmitField' %}
-                        <div class="form-row align-items-center">
-                            <div class="col col-sm-1 ">
-                                {{ l.label(class="form-control-label") }}
-                            </div>
-                            <div class="col col-sm-1">
-                            {{ l(class="form-control form-control-md") }}
-                            </div>
-                        </div>
+                             <th>{{ l.label(class="form-control-label") }}</th>
+
                     {% endif %}
                 {% endfor %}
+                </tr>                            
+                {% for entry in range(noentries) %}
+                    <tr>
+                    {% for l in form %}
+                        {% if l.type != 'CSRFTokenField' and l.type!='SubmitField' %}
+                                 <th>{{ l(class="form-control form-control-md") }}</th>
+                        {% endif %}
+                    {% endfor %}  
+                    </tr>            
+                {% endfor %}
+                </table>
         </form>
     </fieldset>
     <div class="form-group">

@@ -1,0 +1,56 @@
+{% extends "layout.html" %}
+{% block head %}
+{% endblock head %}
+
+{% block content %}
+<div class="content-section">
+    </fieldset class="form-group">
+        <form method="POST" action="">
+            {{ form.hidden_tag() }}
+            <div class="form-group">
+                {{ form.experiment.label(class="form-control-label border-bottom") }}
+                {% if form.experiment.errors %}
+                    {{ form.experiment(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.experiment.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.experiment(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>         
+            <div class="form-group pt-3">
+                {{ form.inputs.label(class="form-control-label border-bottom") }}
+                <table>
+                <tr>
+                {% for l in form.inputs[1] %}
+                    {% if l.type != 'CSRFTokenField' and l.type!='SubmitField' %}
+                             <th>{{ l.label(class="form-control-label") }}</th>
+    
+                    {% endif %}
+                {% endfor %}
+                </tr> 
+                {% for entry in form.inputs %}
+                    <tr data-toggle="fieldset-entry">
+                    {% for l in entry %}
+                        {% if l.type != 'CSRFTokenField' and l.type!='SubmitField' %}
+                                 <td>{{ l(class="form-control form-control-md") }}</td>
+                        {% endif %}
+                    {% endfor %}  
+                    </tr>            
+                {% endfor %}                           
+                </table>
+                <div class="form-group form-row pt-3">
+                    {{ form.add(class="btn btn-dark btn-sm btn-block") }}
+                </div>
+            </div>    
+            <div class="form-group border-top pt-3">
+                {{ form.submit(class="btn btn-outline-info") }}
+            </div>
+        </form>
+    </fieldset>
+</div>
+ 
+
+{% endblock content %}
