@@ -40,7 +40,7 @@ class Experiment(db.Model):
     datecreated=db.Column(db.DateTime, nullable=False, default=datetime.utcnow)           
     status = db.Column(db.Boolean, nullable=False, default=False)
     # setup relationship to samples (one batch to many samples)
-    inputs = db.relationship('Input',backref='inputexpname', lazy=True)
+    inputs = db.relationship('Input',backref='inputexpid', lazy=True)
     
 class Input(db.Model):
     time = db.Column(db.Numeric(3,2), primary_key=True, nullable=False)
@@ -50,7 +50,7 @@ class Input(db.Model):
     input4 = db.Column(db.Numeric(3,2), nullable=True)
     input5 = db.Column(db.Numeric(3,2), nullable=True)
     #setup relationship to Experiment table
-    experiment = db.Column(db.String, db.ForeignKey('experiment.name'), nullable=False)
+    experiment = db.Column(db.String, db.ForeignKey('experiment.id'), nullable=False)
     
     def __repr__(self):
         return f"Input Table" 
@@ -76,11 +76,12 @@ def home():
                               input4=entry.input4.data,
                               input5=entry.input5.data,
                               #relationships
-                              inputexpname=Experiment.query.filter_by(name=form.experimentname.data).first())
+                              inputexpid=Experiment.query.filter_by(name=form.experimentname.data).first()
+                              )
                 db.session.add(input)
             db.session.commit()
             flash('Input table has been saved', 'success')
-            return render_template('home3.html', form=form)
+            return render_template('home3.html',form=form)
     
     elif request.method == 'GET':
         return render_template('home3.html', form=form)
